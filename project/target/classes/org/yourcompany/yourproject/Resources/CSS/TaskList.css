@@ -3,5 +3,6 @@
     border: 2px ;
     font-size: larger;
     padding-left: 10em;
-   
+   text-align: center;
+   border-top-left-radius: 25px;
 }

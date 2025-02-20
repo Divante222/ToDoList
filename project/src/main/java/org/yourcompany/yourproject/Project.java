@@ -4,6 +4,7 @@
 
 package org.yourcompany.yourproject;
 
+import java.awt.Insets;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -26,8 +27,11 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -55,6 +59,7 @@ public class Project extends Application {
     public static ArrayList<String> colors = new ArrayList<>(Arrays.asList("808080", "e0f504"));
     public int colorCount = 0;
     public static VBox flowPaneVbox1;
+    public static VBox titleVBox;
 
     public Project(){
         f = new File("E:\\GithubStuff\\ToDoList\\project\\src\\main\\java\\org\\yourcompany\\yourproject\\Resources\\JSON_Files\\toDoList.json");
@@ -64,12 +69,14 @@ public class Project extends Application {
         flowPane = new FlowPane();
         flowPane2 = new FlowPane();
         flowPaneVbox1 = new VBox();
+        titleVBoxSetup();
         setFlowPane(flowPane);
         setFlowPane(flowPane2);
         flowPane2Setup();
         addVBoxesToStackPane();
         setStackPaneBackground();
         setupInnerStackPane1();
+        
         scene = new Scene(stackPaneBackground, 800, 800);
     }
 
@@ -77,11 +84,40 @@ public class Project extends Application {
         launch(args);
     }
 
+    public static void titleVBoxSetup(){
+        VBox vbox = new VBox();
+        Text text = new Text("To Do List");
+        text.setStyle("-fx-font-size: 2em;" );
+
+        vbox.setStyle("-fx-padding-left: 3em;" + 
+            "-fx-padding-right: 3em;" +
+            "-fx-background-color: yellow;" + 
+            "-fx-border-top-left-radius: 25px;"
+        );
+
+        vbox.setAlignment(Pos.CENTER);
+
+       
+        
+        vbox.setMaxSize(200, 120);
+        vbox.getChildren().add(text);
+        flowPaneVbox1.getChildren().add(vbox);
+    }   
+
     public void setupInnerStackPane1(){
-        stackPane.setStyle("-fx-background-color:rgb(197, 199, 197);" + 
+        stackPane.setStyle("-fx-background-color:rgb(139, 199, 139);" + 
         "-fx-padding-left: 3em;" + 
         "-fx-padding-right: 3em;" +
-        "-fx-border-radius: 25px;");
+        "-fx-border-radius: 25px;" +
+        "-fx-border-color: purple;" + 
+        "-fx-border-width: .5em; " +        
+        "-fx-border-style: solid;" );
+        // normalize(CornerRadii var0, Insets var1, double var2, double var4)
+        CornerRadii cornerRadii = new CornerRadii(200);
+        Insets insets = new Insets(1,1,1,1);
+
+        // BackgroundFill backgroundFill = new BackgroundFill(Paint.valueOf("808080"), cornerRadii, null);
+        // stackPane.setBackground(new Background(backgroundFill));
     }
 
     public void setStackPaneBackground(){
@@ -110,29 +146,24 @@ public class Project extends Application {
         "-fx-text-align: center;" +
         "-fx-font-size: 2em;");
 
-        TextField textField = new TextField();
-        textField.setStyle("-fx-padding: 3em;");
-        textField.setMinWidth(100);
-        textField.setMaxWidth(100);
+        TextArea textArea = new TextArea();
+        textArea.setWrapText(true);
+        textArea.setPrefSize(100, 100);
 
         Button button = new Button("Add");
         button.setOnAction(e -> {
-            // addTaskToScreen(taskText);
-            System.out.println(flowPane2.getChildren().get(0));
             HBox hbox2 = (HBox) flowPane2.getChildren().get(0);
-            System.out.println(hbox2.getChildren().get(1));
-            TextField textfield2 = (TextField) hbox2.getChildren().get(1);
-            System.out.println(textfield2.getText());
-            if(textfield2.getText() != ""){
-                addTaskToScreen(textfield2.getText());
-                addToJSONFile(textfield2.getText());
+            TextArea textArea2 = (TextArea) hbox2.getChildren().get(1);
+            if(textArea2.getText() != ""){
+                addTaskToScreen(textArea2.getText());
+                addToJSONFile(textArea2.getText());
             }
         });
 
         button.setStyle("-fx-padding: 20;" +
         "-fx-font-size: 2em;");
 
-        hbox.getChildren().addAll(label, textField, button);
+        hbox.getChildren().addAll(label, textArea, button);
         flowPane2.getChildren().add(hbox);
     }
     
@@ -209,7 +240,9 @@ public class Project extends Application {
     public static Button addDeleteButton(){
         Button button = new Button();
         button.setText("Delete");
-        button.setAlignment(Pos.TOP_RIGHT);
+        button.setAlignment(Pos.CENTER);
+        button.setPrefSize(75, 75);
+        // button.textAlignmentProperty().setValue(TextAlignment.CENTER);
         button.setOnAction(e -> {
             HBox hboxParent = (HBox) button.getParent();
             flowPane.getChildren().indexOf(hboxParent);
