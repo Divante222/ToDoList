@@ -56,7 +56,7 @@ public class Project extends Application {
     public static Scene scene;
     public static FlowPane flowPane;
     public static FlowPane flowPane2;
-    public static ArrayList<String> colors = new ArrayList<>(Arrays.asList("808080", "e0f504"));
+    public static ArrayList<String> colors = new ArrayList<>(Arrays.asList("#E6F0FA", "#F39C12"));
     public int colorCount = 0;
     public static VBox flowPaneVbox1;
     public static VBox titleVBox;
@@ -87,29 +87,30 @@ public class Project extends Application {
     public static void titleVBoxSetup(){
         VBox vbox = new VBox();
         Text text = new Text("To Do List");
-        text.setStyle("-fx-font-size: 2em;" );
+        text.setStyle("-fx-font-size: 5em;");
 
-        vbox.setStyle("-fx-padding-left: 3em;" + 
-            "-fx-padding-right: 3em;" +
-            "-fx-background-color: yellow;" + 
-            "-fx-border-top-left-radius: 25px;"
+        vbox.setStyle( 
+            "-fx-background-color: #F39C12;" +
+            "-fx-background-radius: 3em;" +
+            "-fx-border-color: #E6F0FA;" +
+            "-fx-border-width: .5em; " + 
+            "-fx-border-radius: 2em;" + 
+            "-fx-padding: 4em;"
         );
 
         vbox.setAlignment(Pos.CENTER);
-
-       
-        
-        vbox.setMaxSize(200, 120);
+        // vbox.setMaxSize(200, 120);
         vbox.getChildren().add(text);
         flowPaneVbox1.getChildren().add(vbox);
     }   
 
     public void setupInnerStackPane1(){
-        stackPane.setStyle("-fx-background-color:rgb(139, 199, 139);" + 
+        stackPane.setStyle("-fx-background-color:rgb(160, 198, 240);" + 
         "-fx-padding-left: 3em;" + 
         "-fx-padding-right: 3em;" +
-        "-fx-border-radius: 25px;" +
-        "-fx-border-color: purple;" + 
+        "-fx-border-radius: 3em;" +
+        "-fx-background-radius: 3.4em;" +
+        "-fx-border-color: #2C3E50;" + 
         "-fx-border-width: .5em; " +        
         "-fx-border-style: solid;" );
         // normalize(CornerRadii var0, Insets var1, double var2, double var4)
@@ -121,7 +122,7 @@ public class Project extends Application {
     }
 
     public void setStackPaneBackground(){
-        stackPaneBackground.setStyle("-fx-background-color: grey;" +
+        stackPaneBackground.setStyle("-fx-background-color: black;" +
         "-fx-padding: 2em;");
         stackPaneBackground.getChildren().add(stackPane);
     }
@@ -144,7 +145,8 @@ public class Project extends Application {
         Label label = new Label("Enter new Task");
         label.setStyle("-fx-padding: 1em;" +
         "-fx-text-align: center;" +
-        "-fx-font-size: 2em;");
+        "-fx-font-size: 2em;" 
+        );
 
         TextArea textArea = new TextArea();
         textArea.setWrapText(true);
@@ -160,10 +162,19 @@ public class Project extends Application {
             }
         });
 
-        button.setStyle("-fx-padding: 20;" +
-        "-fx-font-size: 2em;");
+        button.setStyle("-fx-padding: 1em;" +
+        "-fx-font-size: 2em;" + 
+        "-fx-border-radius: 3em;");
 
         hbox.getChildren().addAll(label, textArea, button);
+        hbox.setAlignment(Pos.TOP_CENTER);
+        hbox.setSpacing(5);
+        hbox.setStyle("-fx-padding: 1em;");
+
+        flowPane2.setStyle("-fx-border-color: #E6F0FA;" +
+        "-fx-border-width: 1em; " +        
+        "-fx-border-style: solid;" +
+        "-fx-border-radius: 1em;");
         flowPane2.getChildren().add(hbox);
     }
     
@@ -242,7 +253,7 @@ public class Project extends Application {
         button.setText("Delete");
         button.setAlignment(Pos.CENTER);
         button.setPrefSize(75, 75);
-        // button.textAlignmentProperty().setValue(TextAlignment.CENTER);
+
         button.setOnAction(e -> {
             HBox hboxParent = (HBox) button.getParent();
             flowPane.getChildren().indexOf(hboxParent);
@@ -308,32 +319,25 @@ public class Project extends Application {
     public static void addTaskToScreen(String taskText){
         
         HBox hbox = new HBox();
-        // hbox.setId("default-hbox");
+
         hbox.setAlignment(Pos.CENTER);
         hbox.setMinWidth(150);
         hbox.setMinHeight(50);
-        // hbox.setMaxSize(160, 150);
 
         Text txt = new Text();
 
         txt.setText(taskText);
         txt.setTextAlignment(TextAlignment.CENTER);
 
-        // System.out.println(Node.getClassCssMetaData());
-        // hbox.setMargin(, null);
-        hbox.setBackground(Background.fill(Paint.valueOf("#f6fdf6")));
+        hbox.setBackground(Background.fill(Paint.valueOf("#F39C12")));
         hbox.setStyle(
             "-fx-padding: 2; " +
-            "-fx-border-color: purple;" + 
+            "-fx-border-color: #ECF0F1;" + 
             "-fx-border-width: .5em; " +        
             "-fx-border-style: solid;" +
             "-fx-font-size: 2em;" + 
             "-fx-border-radius: 0.5em;"
         );
-        
-        // hbox.setSpacing(0);
-        // hbox.setStyle("-fx-background-color: lightblue;" +
-        //         "-fx-border: 22px solid green;");
         hbox.getChildren().add(txt);
 
         HBox container = new HBox();
